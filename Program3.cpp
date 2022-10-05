@@ -69,13 +69,14 @@ void imprimirProduto(struct noFila *inicioFila){
 int main(){
 	struct noFila *tabelaProduto[6];
 	
-	for (int i = 0; i < 7; i++){
+	for (int i = 0; i <= 6; i++){
 		tabelaProduto[i] = NULL;
 	}
 	
 	float preco;
 	char *nome;
-	int cdg, indice;
+	int cdg;
+	int indice = -1;
 	
 	while(preco != -1){
 		cout << "\nDigite o preco ou '-1' para sair: ";
@@ -95,18 +96,26 @@ int main(){
 			tabelaProduto[indice] = inserirProduto(tabelaProduto[indice], preco, nome, cdg);
 		}
 	}
-	int busca;
-	
-	while (busca != -1){
-		cout << "\nBuscar Regiao:\n" << "0:Sul\n1:Norte\n2:Leste\n3:Oeste\n4:Nordeste\n5:Sudeste\n6:Centro-Oeste\n-1:Sair\n\nInforme: ";
-		cin >> busca;
-		if (busca == -1){
-			cout << "\n***Fim do programa***";
-			break;
+	if (indice != -1){
+		for (int j = 0; j <= 7; j++){
+			if (j == 0){
+				cout << "\nProdutos do Sul:\n";
+			}else if (j == 1){
+				cout << "\nProdutos do Norte:\n";
+			}else if (j == 2){
+				cout << "\nProdutos do Leste:\n";
+			}else if (j == 3){
+				cout << "\nProdutos do Oeste:\n";
+			}else if (j == 4){
+				cout << "\nProdutos do Nordeste:\n";
+			}else if (j == 5){
+				cout << "\nProdutos do Sudeste:\n";
+			}else{
+				cout << "\nProdutos do Centro-Oeste:\n";	
+			}
+			imprimirProduto(tabelaProduto[j]);
 		}
-		cout << "\n\nProdutos na Regiao: " << busca << endl;
-		imprimirProduto(tabelaProduto[busca]);
 	}
-
+	cout << "\n***Fim do programa***";
 	return 0;
 }

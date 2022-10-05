@@ -75,12 +75,12 @@ int main(){
 		
 		indice = funcaoHash(peso, altura);
 		filaIMC[indice] = inserirFila(filaIMC[indice], peso, altura);
-	}
+}
 	int busca;
-	
-	while (busca != -1){
-		cout << "\nDigite o IMC(0:Ideal, 1:Acima, 2:Abaixo) para consulta ou digite '-1' para sair: ";
-		cin >> busca;
+	if (indice =! -1){
+		while (busca != -1){
+			cout << "\nDigite o IMC(0:Ideal, 1:Acima, 2:Abaixo) para consulta ou digite '-1' para sair: ";
+			cin >> busca;
 		if (busca == -1){
 			cout << "\n***Fim do Programa***";
 			break;
@@ -93,5 +93,7 @@ int main(){
 		}
 		imprimirFila(filaIMC[busca]);
 	}
+}
+	cout << "\n***Fim do Programa***";
 	return 0;
 }

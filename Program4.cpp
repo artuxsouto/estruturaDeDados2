@@ -77,11 +77,12 @@ int main(){
 	
 	struct noFila *tabelaFuncionario[5];
 	
-	for(int i = 0; i < 5; i++){
+	for(int i = 0; i <= 5; i++){
 		tabelaFuncionario[i] = NULL;
 	}
 	char *nome;
-	int cdg, indice;
+	int cdg;
+	int indice = -1;
 	float salario;
 	
 	while (cdg != -1){
@@ -97,22 +98,27 @@ int main(){
 		cout << "\nDigite o salario: ";
 		cin >> salario;
 		
-		if (cdg < 5){
+		if (cdg <= 4){
 		indice = funcaoHash(cdg);
 		tabelaFuncionario[indice] = inserirFuncionario(tabelaFuncionario[indice], cdg, nome, salario);	
 		}
 	}
-	int busca;
-	
-	while (busca != -1){
-		cout << "\nLocalizando funcionario por cargo:\n" << "0:Escriturario\n1:Secretario\n2:Caixa\n3:Gerente\n4:Diretor\n-1:Sair\n\nInforme: ";
-		cin >> busca;
-		if (busca == -1){
-			cout << "\n***Fim do Programa***";
-			break;
+	if(indice != -1){
+		for (int j = 0; j <= 4; j ++){
+			if ( j == 0){
+				cout << "\nCargo:Escriturário(teve 30% aumento no salario)\n";
+			}else if (j == 1){
+				cout << "\nCargo:Secretário(teve 25% aumento no salario)\n";
+			}else if (j == 2){
+				cout << "\nCargo:Caixa(20% aumento no salario)\n";
+			}else if (j == 3){
+				cout << "\nCargo:Gerente(10% de aumento no salario)\n";
+			}else{
+				cout << "\nCargo:Diretor(Não tem aumento)";
+			}
+		imprimirFuncionario(tabelaFuncionario[j]);
 		}
-		cout << "\n\nFuncionarios do cargo: " << busca << endl;
-		imprimirFuncionario(tabelaFuncionario[busca]);
 	}
+	cout << "\n***Fim do Programa***";
 	return 0;
 }

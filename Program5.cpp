@@ -36,16 +36,16 @@ int funcaoHash(int valor){
 
 	int indiceCat;
 
-		if ((valor == 5)&&(valor < 8)){
+		if ((valor >= 5)&&(valor <= 7)){
 			indiceCat = 0;
-		}else if ((valor == 8)&&(valor < 11)){
+		}else if ((valor >= 8)&&(valor <= 10)){
 			indiceCat = 1;
-		}else if ((valor == 11)&&(valor < 14)){
+		}else if ((valor >= 11)&&(valor <= 13)){
+			indiceCat = 0;
+		}else if ((valor >= 14)&&(valor <= 17)){
+			indiceCat = 1;
+		}else{
 			indiceCat = 2;
-		}else if ((valor == 14)&&(valor < 18)){
-			indiceCat = 3;
-		}else {
-			indiceCat = 4;
 		}
 	return indiceCat;
 }
@@ -54,20 +54,21 @@ void imprimirNadador(struct noFila *inicioFila){
 	struct noFila *noAtual = inicioFila;
 
 	while(noAtual != NULL){
-		cout << "\nNadador: " << noAtual->nome << "\nIdade: " << noAtual->idade << endl;
+		cout << "\nNadador(a): " << noAtual->nome << "\nIdade: " << noAtual->idade << endl;
 		noAtual = noAtual->proximoNo;
 	}
 	cout << "\n***Fim da Lista***\n";
 }
 
 int main(){
-	struct noFila *tabelaNadador[5];
+	struct noFila *tabelaNadador[2];
 
-	for (int i = 0; i < 5; i++){
+	for (int i = 0; i <= 2; i++){
 		tabelaNadador[i] = NULL;
 	}
 
-	int idade, indice;
+	int idade;
+	int indice = -1;
 	char *nome;
 
 	while(idade != -1){
@@ -83,17 +84,18 @@ int main(){
 		indice = funcaoHash(idade);
 		tabelaNadador[indice] = inserirNadador(tabelaNadador[indice], idade, nome);
 	}
-	int busca;
-
-	while (busca != -1){
-		cout << "\nBuscar Nadador:\n" << "0:5 ate 7\n1:8 ate 10\n2:11 ate 13\n3:14 ate 17\n4:Maior de 18\n-1:Sair\n\nInforme: ";
-		cin >> busca;
-		if (busca == -1){
-			cout << "\n***Fim do programa***";
-			break;
+	if (indice != -1){
+		for (int j = 0; j <= 2; j++){
+			if (j == 0){
+				cout << "\nInfantil A";
+			}else if (j == 1){
+				cout << "\nInfantil B";
+			}else{
+				cout << "\nAdulto";
+			}
+			imprimirNadador(tabelaNadador[j]);
 		}
-		cout << "\n\nNadador por Categoria: " << busca << endl;
-		imprimirNadador(tabelaNadador[busca]);
 	}
+	cout << "\n***Fim do Programa***";
 	return 0;
 }

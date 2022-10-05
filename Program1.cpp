@@ -60,15 +60,15 @@ int main(){
 	
 	struct noFila *filaEspera[3];
 	
-	for (int i = 0; i < 3; i ++){
+	for (int i = 0; i <= 3; i ++){
 		filaEspera[i] = NULL;
 	}
-	int idade = 0;
+	int idade;
 	char *nome;
-	int indice;
+	int indice = -1;
 	
 	while (idade != -1){
-		cout << "\nDigite a idade: ";
+		cout << "\nDigite a idade ou '-1' para sair: ";
 		cin >> idade;
 		if (idade == -1){
 			break;
@@ -81,17 +81,18 @@ int main(){
 		
 		filaEspera[indice] = inserirFila(filaEspera[indice], idade, nome);
 	}
-	
-	for (int j = 0; j < 3; j ++){
-		if (j == 0){
-			cout << "idade < 30:\n";
-		}else if(j == 1){
-			cout << "\nIdade entre 30 a 50:\n";
-		}else{
-			cout << "\nIdade maior que 50:\n";
-		}
+	if (indice != -1){
+		for (int j = 0; j < 3; j ++){
+			if (j == 0){
+				cout << "idade < 30:\n";
+			}else if(j == 1){
+				cout << "\nIdade entre 30 a 50:\n";
+			}else{
+				cout << "\nIdade maior que 50:\n";
+			}
 		imprimirFila(filaEspera[j]);
-	}
-	
+		}
+}
+	cout << "\n***Fim do Programa***";
 	return 0;
 }
