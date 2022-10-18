@@ -3,22 +3,26 @@
 
 using namespace std;
 
-int funcaoHash(int chave, int tamanhoTabela){
+struct dadosPessoa{
+	int idade, rg;
+	float altura;
+};
 
+int funcaoHash(int chave, int tamanhoTabela){
 	int indice = chave % tamanhoTabela;
 	return indice;	
 }
 
-int inserirTabelaHash(int tabelaHash[], int chave, int idade, float altura, int tamanhoTabela){
+int inserirTabelaHash(struct dadosPessoa tabelaHash[], int chave, int valor, float valor1, int tamanhoTabela){
 	
 	int indice = funcaoHash(chave, tamanhoTabela);
 	
-	while (tabelaHash[indice] != -1){
+	while (tabelaHash[indice].rg != -1){
 		if (indice == tamanhoTabela){
 			indice = -2;
 			break;
 		}
-		if (tabelaHash[indice] == chave){
+		if (tabelaHash[indice].rg == chave){
 			indice = -1;
 			break;
 		}
@@ -26,26 +30,28 @@ int inserirTabelaHash(int tabelaHash[], int chave, int idade, float altura, int 
 	}
 	
 	if (indice >= 0){
-		tabelaHash[indice] = chave;
+		tabelaHash[indice].rg = chave;
+		tabelaHash[indice].idade = valor;
+		tabelaHash[indice].altura = valor1;
 	}
 	return indice;
 }
 
-void imprimirTabelaHash(int tabelaHash[], int tamanhoDaTabela){
+void imprimirTabelaHash(struct dadosPessoa tabelaHash[], int tamanhoDaTabela){
 	
 	for (int i = 0; i < tamanhoDaTabela; i++){
-		cout << "[" << i << "] " << tabelaHash[i] << endl;
+		cout << "[" << i << "] " << tabelaHash[i].rg << "\nIdade: " << tabelaHash[i].idade << "\nAltura: " << tabelaHash[i].altura << "\nRG: " << tabelaHash[i].rg << endl;
 	}
 	cout << "\n***FIM***\n";
 }
 
-int procuraNaTabela(int tabelaHash[], int chave, int tamanhoTabela){
+int procuraNaTabela(struct dadosPessoa tabelaHash[], int chave, int tamanhoTabela){
 	
 	int indice;
 	indice = funcaoHash(chave, tamanhoTabela);
 	
-	while (tabelaHash[indice] != chave){
-		if (tabelaHash[indice] == -1){
+	while (tabelaHash[indice].rg != chave){
+		if (tabelaHash[indice].rg == -1){
 			indice = -1;
 			break;			
 		}if (indice == tamanhoTabela){
@@ -65,10 +71,10 @@ int main(){
 	cout << "Informe a quantidade de posicoes da tabela: ";
 	cin >> tamanhoTabela;
 	
-	int *tabelaHash = (int*)malloc(sizeof(int) * tamanhoTabela);
+	struct dadosPessoa tabelaHash[tamanhoTabela];
 	
-	for (int i = 0; i < tamanhoTabela; i ++){
-		tabelaHash[i] = -1;
+	for (int i = 0; i < tamanhoTabela; i++){
+		tabelaHash[i].rg = -1;
 	}
 	
 	while (chave != -1){
@@ -84,11 +90,10 @@ int main(){
 		cout << "\nDigite a altura da pessoa: ";
 		cin >> altura;
 		
-		
 		resultado = inserirTabelaHash(tabelaHash, chave, idade, altura, tamanhoTabela);
 		
 		if (resultado >= 0){
-			cout << "***\nChave inserida com sucesso!\n";
+			cout << "\nChave inserida com sucesso!\n";
 			imprimirTabelaHash(tabelaHash, tamanhoTabela);
 		}else if (resultado == -2){
 				cout << "\n---Tabela nao possui espaco livre---";
@@ -109,7 +114,7 @@ int main(){
 			cout << "\nA chave buscada esta na posicao: " << resultado << endl;
 			imprimirTabelaHash(tabelaHash, tamanhoTabela);			
 		}else{
-			cout << "\n---Chave nao localizada---" << endl;
+			cout << "\n---RG nao localizado---" << endl;
 		}
 	}	
 	return 0;

@@ -3,6 +3,11 @@
 
 using namespace std;
 
+struct dadosPessoa{
+	int idade, codigo;
+	float salario;
+};
+
 int funcaoHash(int chave, int tamanhoTabela){
 	int indice = chave % tamanhoTabela;
 	return indice;
@@ -17,21 +22,21 @@ int funcaoReHash(int i, int k, int tamanhoTabela){
 	return indice;
 }
 
-void imprimirTabelaHash(int tabelaHash[], int tamanhoTabela){
+void imprimirTabelaHash(struct dadosPessoa tabelaHash[], int tamanhoTabela){
 	for (int i = 0; i < tamanhoTabela; i ++){
-		cout << "[" << i << "] " << tabelaHash[i] << endl;
+		cout << "[" << i << "] " << tabelaHash[i].codigo << "\nIdade: " << tabelaHash[i].idade << "\nSalario: R$ " << tabelaHash[i].salario << "\nCodigo do funcionario: " << tabelaHash[i].codigo << endl;
 	}
 	cout << "\n***FIM***\n";
 }
 
-int procuraNaTabela(int tabelaHash[], int chave, int tamanhoTabela){
+int procuraNaTabela(struct dadosPessoa tabelaHash[], int chave, int tamanhoTabela){
 	int indice, i, k;
 	i = funcaoHash(chave, tamanhoTabela);
 	k = funcaoHashSegundoPasso(chave, tamanhoTabela);
 	indice = funcaoReHash(i, k, tamanhoTabela);
 	
-	while (tabelaHash[indice] != chave){
-		if (tabelaHash[indice] == -1){
+	while (tabelaHash[indice].codigo != chave){
+		if (tabelaHash[indice].codigo == -1){
 			indice = -1;
 			break;
 		}
@@ -44,25 +49,27 @@ int procuraNaTabela(int tabelaHash[], int chave, int tamanhoTabela){
 	return indice;
 }
 
-int inserirNaTabela(int tabelaHash[], int chave, int idade, float salario, int tamanhoTabela){
+int inserirNaTabela(struct dadosPessoa tabelaHash[], int chave, int valor, float salario, int tamanhoTabela){
 	int indice, i, k;
 	i = funcaoHash(chave, tamanhoTabela);
 	k = funcaoHashSegundoPasso(chave, tamanhoTabela);
 	indice = funcaoReHash(i, k, tamanhoTabela);
 	
-	while (tabelaHash[indice] != -1){
+	while (tabelaHash[indice].codigo != -1){
 		if (indice == tamanhoTabela){
 			indice = -2;
 			break;
 		}
-		if (tabelaHash[indice] == chave){
+		if (tabelaHash[indice].codigo == chave){
 			indice = -1;
 			break;
 		}
 		indice ++;
 	}
 	if (indice >= 0){
-		tabelaHash[indice] = chave;
+		tabelaHash[indice].codigo = chave;
+		tabelaHash[indice].idade = valor;
+		tabelaHash[indice].salario = salario;
 	}
 	return indice;
 }
@@ -74,10 +81,10 @@ int main(){
 	cout << "Insercao de Numeros - Espelhamento Duplo\nInforme o tamanho da tabela: ";
 	cin >> tamanhoTabela;
 	
-	int *tabelaHash = (int*)malloc(sizeof(int)* tamanhoTabela);
+	struct dadosPessoa tabelaHash[tamanhoTabela];
 	
 	for (int i = 0; i < tamanhoTabela; i++){
-		tabelaHash[i] = -1;
+		tabelaHash[i].codigo = -1;
 	}
 	
 	int chave = 0;
